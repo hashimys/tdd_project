@@ -59,4 +59,15 @@ void main() {
       expect(result, tJson);
     });
   });
+
+  group('copyWith', () {
+    test('should return a [UserModel] with different data', () {
+      //  Arrange
+
+      // Act
+      final result = tModel.copyWith(name: 'Paul');
+
+      expect(result.name, equals('Paul'));
+    });
+  });
 }

@@ -1,4 +1,4 @@
-import '../utils/typedef.dart';
+import 'package:tdd_project/core/utils/typedef.dart';
 
 abstract class UsecaseWithParams<Type, Params> {
   const UsecaseWithParams();
