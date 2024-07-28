@@ -1,11 +1,10 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-
-import '../../../../core/errors/exceptions.dart';
-import '../../../../core/utils/constants.dart';
-import '../../../../core/utils/typedef.dart';
-import '../models/user_model.dart';
+import 'package:tdd_project/core/errors/exceptions.dart';
+import 'package:tdd_project/core/utils/constants.dart';
+import 'package:tdd_project/core/utils/typedef.dart';
+import 'package:tdd_project/src/authentication/data/models/user_model.dart';
 
 abstract class AuthenticationRemoteDataSource {
   Future<void> createUser({
@@ -18,7 +17,7 @@ abstract class AuthenticationRemoteDataSource {
 }
 
 const kCreateUserEndpoint = '/test-api/users';
-const kGetUsersEndpoint = '/test-api/user';
+const kGetUsersEndpoint = '/test-api/users';
 
 class AuthRemoteDataSrcImpl implements AuthenticationRemoteDataSource {
   const AuthRemoteDataSrcImpl(this._client);
@@ -31,19 +30,18 @@ class AuthRemoteDataSrcImpl implements AuthenticationRemoteDataSource {
     required String name,
     required String avatar,
   }) async {
-    //  1. check to make sure that it returns the right data when the status
-    //  code is 200 or the proper response code
-    //  2. check to make sure that it "THROWS A CUSTOM EXCEPTION" with the
-    //  right message when status code is the bad one
+    // 1. check to make sure that it returns the right data when the status
+    // code is 200 or the proper response code
+    // 2. check to make sure that it "THROWS A CUSTOM EXCEPTION" with the
+    // right message when status code is the bad one
     try {
-      final response = await _client.post(
-        Uri.https(kBaseUrl, kCreateUserEndpoint),
-        body: jsonEncode({
-          'createdAt': 'createdAt',
-          'name': 'name',
-          'avatar': 'avatar',
-        }),
-      );
+      final response =
+          await _client.post(Uri.https(kBaseUrl, kCreateUserEndpoint),
+              body: jsonEncode({
+                'createdAt': createdAt,
+                'name': name,
+              }),
+              headers: {'Content-Type': 'application/json'});
       if (response.statusCode != 200 && response.statusCode != 201) {
         throw APIException(
           message: response.body,
@@ -61,7 +59,7 @@ class AuthRemoteDataSrcImpl implements AuthenticationRemoteDataSource {
   Future<List<UserModel>> getUsers() async {
     try {
       final response = await _client.get(
-        Uri.http(kBaseUrl, kGetUsersEndpoint),
+        Uri.https(kBaseUrl, kGetUsersEndpoint),
       );
       if (response.statusCode != 200) {
         throw APIException(

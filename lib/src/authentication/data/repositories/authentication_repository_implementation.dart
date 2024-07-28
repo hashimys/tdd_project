@@ -1,11 +1,10 @@
 import 'package:dartz/dartz.dart';
-
-import '../../../../core/errors/exceptions.dart';
-import '../../../../core/errors/failure.dart';
-import '../../../../core/utils/typedef.dart';
-import '../../domain/entities/user.dart';
-import '../../domain/repositories/authentication_repository.dart';
-import '../datasources/authentication_remote_data_source.dart';
+import 'package:tdd_project/core/errors/exceptions.dart';
+import 'package:tdd_project/core/errors/failure.dart';
+import 'package:tdd_project/core/utils/typedef.dart';
+import 'package:tdd_project/src/authentication/data/datasources/authentication_remote_data_source.dart';
+import 'package:tdd_project/src/authentication/domain/entities/user.dart';
+import 'package:tdd_project/src/authentication/domain/repositories/authentication_repository.dart';
 
 class AuthenticationRepositoryImplementation
     implements AuthenticationRepository {
@@ -14,10 +13,11 @@ class AuthenticationRepositoryImplementation
   final AuthenticationRemoteDataSource _remoteDataSource;
 
   @override
-  ResultVoid createUser(
-      {required String createdAt,
-      required String name,
-      required String avatar}) async {
+  ResultVoid createUser({
+    required String createdAt,
+    required String name,
+    required String avatar,
+  }) async {
     // Test-Driven Development
     // call the remote data source
     // check if the method returns the proper data

@@ -11,7 +11,7 @@ void main() {
   const tModel = UserModel.empty();
 
   test('should be a subclass of [User] entity', () {
-    //  Assert
+    // Assert
     expect(tModel, isA<User>());
   });
 
@@ -20,7 +20,7 @@ void main() {
 
   group('fromMap', () {
     test('should return a [UserModel] with the right data', () {
-      //  Act
+      // Act
       final result = UserModel.fromMap(tMap);
       expect(result, equals(tModel));
     });
@@ -28,7 +28,7 @@ void main() {
 
   group('fromJson', () {
     test('should return a [UserModel] with the right data', () {
-      //  Act
+      // Act
       final result = UserModel.fromJson(tJson);
       expect(result, equals(tModel));
     });
@@ -36,7 +36,7 @@ void main() {
 
   group('toMap', () {
     test('should return a [Map] with the right data', () {
-      //  Act
+      // Act
       final result = tModel.toMap();
 
       // Assert
@@ -45,16 +45,15 @@ void main() {
   });
 
   group('toJson', () {
-    test('should return a [JSON] with the right data', () {
-      //  Act
+    test('should return a [JSON] string with the right data', () {
+      // Act
       final result = tModel.toJson();
       final tJson = jsonEncode({
         "id": "1",
         "avatar": "_empty.avatar",
         "createdAt": "_empty.createdAt",
-        "name": "_empty.name",
+        "name": "_empty.name"
       });
-
       // Assert
       expect(result, tJson);
     });
@@ -62,7 +61,7 @@ void main() {
 
   group('copyWith', () {
     test('should return a [UserModel] with different data', () {
-      //  Arrange
+      // Arrange
 
       // Act
       final result = tModel.copyWith(name: 'Paul');

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
+import 'package:http/http.dart' as http;
 import 'package:tdd_project/core/errors/exceptions.dart';
 import 'package:tdd_project/core/utils/constants.dart';
 import 'package:tdd_project/src/authentication/data/datasources/authentication_remote_data_source.dart';
@@ -31,12 +31,13 @@ void main() {
         final methodCall = remoteDataSource.createUser;
 
         expect(
-            methodCall(
-              createdAt: 'createdAt',
-              name: 'name',
-              avatar: 'avatar',
-            ),
-            completes);
+          methodCall(
+            createdAt: 'createdAt',
+            name: 'name',
+            avatar: 'avatar',
+          ),
+          completes,
+        );
 
         verify(
           () => client.post(
@@ -63,13 +64,18 @@ void main() {
         final methodCall = remoteDataSource.createUser;
 
         expect(
-            () async => methodCall(
-                  createdAt: 'createdAt',
-                  name: 'name',
-                  avatar: 'avatar',
-                ),
-            throwsA(const APIException(
-                message: 'Invalid email address', statusCode: 400)));
+          () async => methodCall(
+            createdAt: 'createdAt',
+            name: 'name',
+            avatar: 'avatar',
+          ),
+          throwsA(
+            const APIException(
+              message: 'Invalid email address',
+              statusCode: 400,
+            ),
+          ),
+        );
 
         verify(
           () => client.post(
@@ -87,7 +93,7 @@ void main() {
     );
   });
 
-  group('getUser', () {
+  group('getUsers', () {
     const tUsers = [UserModel.empty()];
     test(
       'should return [List<User>] when the status code is 200',
@@ -105,26 +111,28 @@ void main() {
         verifyNoMoreInteractions(client);
       },
     );
-
     test(
       'should throw [APIException] when the status code is not 200',
       () async {
+        const tMessage = 'Server down, Server '
+            'down, I repeat Server down. Mayday Mayday Mayday, We are'
+            ' going down, '
+            'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH'
+            'HHHH';
         when(() => client.get(any())).thenAnswer(
           (_) async => http.Response(
-              'Server down, Server '
-              'down, I repeat Server down. Mayday Mayday Mayday, We are'
-              ' going down, '
-              'AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH'
-              'HHHH',
-              500),
+            tMessage,
+            500,
+          ),
         );
 
         final methodCall = remoteDataSource.getUsers;
 
         expect(
           () => methodCall(),
-          throwsA(const APIException(
-              message: 'Invalid email address', statusCode: 500)),
+          throwsA(
+            const APIException(message: tMessage, statusCode: 500),
+          ),
         );
 
         verify(() => client.get(Uri.https(kBaseUrl, kGetUsersEndpoint)))

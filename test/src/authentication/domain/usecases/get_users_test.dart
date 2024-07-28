@@ -17,15 +17,16 @@ void main() {
   });
 
   const tResponse = [User.empty()];
+
   test(
-    'should call the [AuthRepo.getUsers] and return [List<User>]',
+    'should call [AuthRepo.getUsers] and return [List<User>]',
     () async {
       // Arrange
       when(() => repository.getUsers()).thenAnswer(
         (_) async => const Right(tResponse),
       );
 
-      //  Act
+      // Act
       final result = await usecase();
 
       expect(result, equals(const Right<dynamic, List<User>>(tResponse)));

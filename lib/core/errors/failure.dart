@@ -1,26 +1,21 @@
 import 'package:equatable/equatable.dart';
-
-import 'exceptions.dart';
+import 'package:tdd_project/core/errors/exceptions.dart';
 
 abstract class Failure extends Equatable {
-  const Failure({
-    required this.message,
-    required this.statusCode,
-  });
+  const Failure({required this.message, required this.statusCode});
 
-    final String message;
-    final int statusCode;
+  final String message;
+  final int statusCode;
 
-    @override
-    List<Object> get props => [message, statusCode];
+  String get errorMessage => '$statusCode Error: $message';
+
+  @override
+  List<Object> get props => [message, statusCode];
 }
 
 class APIFailure extends Failure {
-    const APIFailure({
-      required super.message,
-      required super.statusCode,});
+  const APIFailure({required super.message, required super.statusCode});
 
-    APIFailure.fromException(APIException exception)
+  APIFailure.fromException(APIException exception)
       : this(message: exception.message, statusCode: exception.statusCode);
-
 }

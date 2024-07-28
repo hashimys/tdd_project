@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import '../../../../core/utils/typedef.dart';
-import '../../domain/entities/user.dart';
+import 'package:tdd_project/core/utils/typedef.dart';
+import 'package:tdd_project/src/authentication/domain/entities/user.dart';
 
 class UserModel extends User {
   const UserModel({
@@ -37,10 +37,11 @@ class UserModel extends User {
     String? name,
   }) {
     return UserModel(
-        avatar: avatar ?? this.avatar,
-        id: id ?? this.id,
-        createdAt: createdAt ?? this.createdAt,
-        name: name ?? this.name);
+      avatar: avatar ?? this.avatar,
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      name: name ?? this.name,
+    );
   }
 
   DataMap toMap() => {

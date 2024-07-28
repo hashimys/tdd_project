@@ -29,10 +29,10 @@ void main() {
         ),
       ).thenAnswer((_) async => const Right(null));
 
-      //  Act
+      // Act
       final result = await usecase(params);
 
-      //  Assert
+      // Assert
       expect(result, equals(const Right<dynamic, void>(null)));
       verify(
         () => repository.createUser(
